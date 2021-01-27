@@ -1,7 +1,6 @@
 import { PrismaClient, Prisma as PrismaTypes } from '@prisma/client'
 import { PrismaDelete, onDeleteArgs } from '@paljs/plugins'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { getUserId } from './utils'
 
 class Prisma extends PrismaClient {
   constructor(options?: PrismaTypes.PrismaClientOptions) {
@@ -18,7 +17,6 @@ const prisma = new Prisma()
 
 export interface Context extends NextApi {
   prisma: Prisma
-  userId?: number
   select: any
 }
 
@@ -32,7 +30,6 @@ export function createContext({ req, res }: NextApi): Context {
     req,
     res,
     prisma,
-    userId: getUserId(req),
     select: {},
   }
 }
